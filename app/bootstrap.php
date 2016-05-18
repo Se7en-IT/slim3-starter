@@ -18,10 +18,6 @@ $container["db"] =  function ($c) use ($capsule){
 	return $capsule->getConnection();
 };
 /*SETUP SERVICE*/
-$container['response'] = function () {
-	return new ResponseService();
-};
-
 $container["logger"] = function(){
 	$logger = new \Monolog\Logger('logger');
 	$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(APPROOT . '/logs/logger.log', 10, \Monolog\Logger::WARNING));
@@ -31,7 +27,7 @@ $container["logger"] = function(){
 $container["errorHandler"] = function ($c) {
 	return function($request, $response, $ex) use ($c){
 		$c->logger->addError($ex);
-		return $response->jsonKo($ex->getMessage());
+		return $response->withJson($ex->getMessage());
 	};
 };
 
