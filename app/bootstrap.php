@@ -20,7 +20,7 @@ $container["db"] =  function ($c) use ($capsule){
 /*SETUP SERVICE*/
 $container["logger"] = function(){
 	$logger = new \Monolog\Logger('logger');
-	$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(APPROOT . '/logs/logger.log', 10, \Monolog\Logger::WARNING));
+	$logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(APPROOT . '/log/logger.log', 10, \Monolog\Logger::WARNING));
 	return $logger;
 };
 
@@ -34,7 +34,7 @@ $container["errorHandler"] = function ($c) {
 /*START SLIM*/
 $app = new \Slim\App($container);
 
-foreach(glob(APPROOT . '/controllers/*.php') as $router) {
+foreach(glob(APPROOT . '/controller/*.php') as $router) {
 	include $router;
 }
 
